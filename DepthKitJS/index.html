@@ -3,50 +3,78 @@
 	DepthKit JS Demonstration :: 2015 @obviousjim http://specular.cc
 	Based on Aaronetrope by Mr Doob: http://www.aaronkoblin.com/Aaronetrope/
 -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-		<title>DepthKit JS</title>
-		<style>
-			html, body {
-				height: 100%;
-			}
+<html>
 
-			body {
-				background-color: #000000;
-				color: #ffffff;
-				font-family: arial, sans-serif;
-				margin: 0;
-				overflow: hidden;
-			}
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>DepthKit JS</title>
+	<style>
+		html,
+		body {
+			height: 100%;
+		}
 
-			#message {
+		body {
+			background-color: #000000;
+			color: #ffffff;
+			font-family: arial, sans-serif;
+			margin: 0;
+			overflow: hidden;
+		}
 
-				width: 100%;
-				height: 100%;
+		#message {
 
-				display: -webkit-box;
-				display: -moz-box;
-				display: box;
+			width: 100%;
+			height: 100%;
 
-				-webkit-box-orient: horizontal;
-				-moz-box-orient: horizontal;
-				box-orient: horizontal;
+			display: -webkit-box;
+			display: -moz-box;
+			display: box;
 
-				-webkit-box-pack: center;
-				-moz-box-pack: center;
-				box-pack: center;
+			-webkit-box-orient: horizontal;
+			-moz-box-orient: horizontal;
+			box-orient: horizontal;
 
-				-webkit-box-align: center;
-				-moz-box-align: center;
-				box-align: center;
+			-webkit-box-pack: center;
+			-moz-box-pack: center;
+			box-pack: center;
 
-				color: #ffffff;
-				text-align: center;
+			-webkit-box-align: center;
+			-moz-box-align: center;
+			box-align: center;
 
-			}
-		</style>
-	</head>
-	<body style="">
-		<script id="vs" type="x-shader/x-vertex">
+			color: #ffffff;
+			text-align: center;
+
+		}
+	</style>
+</head>
+
+<body style="">
+
+	<video id="video" autoplay style="display:none"> </video>
+
+	<script>
+		var video = document.getElementById('video');
+		var texture = new THREE.VideoTexture(video);
+		texture.needsUpdate;
+		texture.minFilter = THREE.LinearFilter;
+		texture.magFilter = THREE.LinearFilter;
+		texture.format = THREE.RGBFormat;
+		texture.crossOrigin = 'anonymous';
+
+		var imageObject = new THREE.Mesh(
+			new THREE.PlaneGeometry(width, height),
+			new THREE.MeshBasicMaterial({ map: texture }));
+
+		scene.add(imageObject);
+
+		video.src = "files/sample-video1.mov";
+		video.load();
+		video.play();
+	</script>
+
+	<script id="vs" type="x-shader/x-vertex">
 
 			vec3 rgb2hsl( vec3 color ) {
 				float h = 0.0;
@@ -121,7 +149,7 @@
 
 		</script>
 
-		<script id="fs" type="x-shader/x-fragment">
+	<script id="fs" type="x-shader/x-fragment">
 
 			uniform sampler2D map;
 			uniform float opacity;
@@ -142,16 +170,19 @@
 
 		</script>
 
-		<script src="js/three.min.js"></script>
-		<script src="js/tween.min.js"></script>
-		<script src="js/stats.min.js"></script>
-		<script src="js/system.min.js"></script>
+	<script src="js/three.min.js"></script>
+	<script src="js/tween.min.js"></script>
+	<script src="js/stats.min.js"></script>
+	<script src="js/system.min.js"></script>
 
-		<script src="js/files.js"></script>
-		<script src="js/RGBDVideo.js"></script>
-		<script src="js/Main.js"></script>
-
-		<canvas width="1744" height="1177" style="width: 1744px; height: 1229px;"></canvas>
+	<script src="js/files.js"></script>
+	<script src="js/RGBDVideo.js"></script>
+	<script src="js/Main.js"></script>
 
 
-</body></html>
+	<canvas width="1744" height="1177" style="width: 1744px; height: 1229px;"></canvas>
+
+
+</body>
+
+</html>
