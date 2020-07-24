@@ -5,6 +5,10 @@ const upload = multer(); // set multer to be the upload variable (just like expr
 const fs = require('fs'); //use the file system so we can save files
 
 
+if (!fs.existsSync('public/uploads')) {
+  fs.mkdirSync('public/uploads');
+}
+
 const app = express();
 app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
